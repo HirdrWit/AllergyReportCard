@@ -38,6 +38,14 @@ public class Business_Home extends AppCompatActivity {
     private PlacesClient placesClient;
     private ImageView photoView;
     private FieldSelector fieldSelector;
+    private TextView name_TextView;
+    private TextView address_TextView;
+    private TextView phone_TextView;
+    private TextView price_TextView;
+    private TextView attribution_TextView;
+    private TextView website_TextView;
+    private TextView type_TextView;
+    private String TAG = "Business_Home";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +59,15 @@ public class Business_Home extends AppCompatActivity {
         String message = intent.getStringExtra("place_data");
 
         // Capture the layout's TextView and set the string as its text
-        TextView textView = findViewById(R.id.places_temp_results);
+        name_TextView = findViewById(R.id.places_name);
+        address_TextView = findViewById(R.id.places_address);
+        phone_TextView = findViewById(R.id.places_phone);
+        price_TextView = findViewById(R.id.places_price);
+        attribution_TextView = findViewById(R.id.places_attribution);
+        website_TextView = findViewById(R.id.places_website);
+        type_TextView = findViewById(R.id.places_type);
 
-        setValues(message);
+        getValues(message);
 
         placesClient = Places.createClient(this);
         photoView = findViewById(R.id.photo);
@@ -62,9 +76,34 @@ public class Business_Home extends AppCompatActivity {
                         findViewById(R.id.use_custom_fields), findViewById(R.id.custom_fields_list));
 
         fetchPlace();
-
-        textView.setText(message);
+        setValues();
+//        textView.setText(message);
     }
+
+    private void setValues() {
+        name_TextView.setText(Name);
+        address_TextView.setText("Address: " + Address);
+        phone_TextView.setText("Call: " + PhoneNumber);
+        if(!PriceLevel.equals("null")){
+            Log.v(TAG, String.valueOf(PriceLevel.equals("null")));
+            Log.v(TAG, PriceLevel);
+            price_TextView.setText(PriceLevel);
+        }
+        else{
+            price_TextView.setVisibility(View.INVISIBLE);
+            price_TextView.setTextSize(0);
+        }
+        if(!Attributions.equals("[]")){
+            attribution_TextView.setText(Attributions);
+        }
+        else{
+            attribution_TextView.setVisibility(View.INVISIBLE);
+            attribution_TextView.setTextSize(0);
+        }
+        website_TextView.setText("Website: " + WebsiteUri);
+        type_TextView.setText(Types);
+    }
+
     private void fetchPlace() {
         photoView.setImageBitmap(null);
         final boolean isFetchPhotoChecked = true;
@@ -124,7 +163,7 @@ public class Business_Home extends AppCompatActivity {
     private void setLoading(boolean loading) {
         findViewById(R.id.loading).setVisibility(loading ? View.VISIBLE : View.INVISIBLE);
     }
-    private void setValues(String message) {
+    private void getValues(String message) {
         String[] values;
         String delimiter = "__";
         values = message.split(delimiter);
@@ -136,15 +175,22 @@ public class Business_Home extends AppCompatActivity {
         PriceLevel = values[5];
         Attributions = values[6];
         WebsiteUri = values[7];
+
         Types = values[8];
-        Log.v("Business_Home", Name);
-        Log.v("Business_Home", Address);
-        Log.v("Business_Home", Id);
-        Log.v("Business_Home", PhoneNumber);
-        Log.v("Business_Home", OpeningHours);
-        Log.v("Business_Home", PriceLevel);
-        Log.v("Business_Home", Attributions);
-        Log.v("Business_Home", WebsiteUri);
-        Log.v("Business_Home", Types);
+        Types = Types.replace('[', '\0');
+        Types = Types.replace(']', '\0');
+        String[] temp_values;
+        String d = ",";
+        temp_values = Types.split(d);
+        Types = temp_values[0];
+//        Log.v("Business_Home", Name);
+//        Log.v("Business_Home", Address);
+//        Log.v("Business_Home", Id);
+//        Log.v("Business_Home", PhoneNumber);
+//        Log.v("Business_Home", OpeningHours);
+//        Log.v("Business_Home", PriceLevel);
+//        Log.v("Business_Home", Attributions);
+//        Log.v("Business_Home", WebsiteUri);
+//        Log.v("Business_Home", Types);
     }
 }
