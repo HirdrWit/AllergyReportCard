@@ -7,5 +7,6 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_business__home">Business_Home</string>
-
+    <string name="longitude_525_boston">42.3376835</string>
+    <string name="latitude_525_boston">-71.0963538</string>
 </resources>

@@ -116,7 +116,7 @@ public final class StringUtil {
     }
 
     static String stringify(Place place) {
-        return place.getName() + "_" + place.getAddress() + "_" + place.getId() + "_" + place.getPhoneNumber() + "_"+place.getOpeningHours()+ "_" + place.getPriceLevel()+ "_" + place.getAttributions()+ "_" + place.getWebsiteUri()+ "_" + place.getTypes();
+        return place.getName() + "__" + place.getAddress() + "__" + place.getId() + "__" + place.getPhoneNumber() + "__" + place.getOpeningHours()+ "__" + place.getPriceLevel()+ "__" + place.getAttributions()+ "__" + place.getWebsiteUri()+ "__" + place.getTypes();
     }
 
     static String stringify(Bitmap bitmap) {
