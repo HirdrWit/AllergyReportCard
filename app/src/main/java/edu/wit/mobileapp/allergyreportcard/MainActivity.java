@@ -20,6 +20,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -40,13 +51,18 @@ import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+
 import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.List;
+
 import android.content.Context;
+
+import org.json.JSONObject;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -56,9 +72,12 @@ public class MainActivity extends AppCompatActivity
     private PlacesClient placesClient;
     private TextView responseView;
     private TextView lat_long;
-    public String Latitude = String.valueOf(R.string.latitude_525_boston), Longitude = String.valueOf(R.string.longitude_525_boston);
+    private String Latitude = String.valueOf(R.string.latitude_525_boston), Longitude = String.valueOf(R.string.longitude_525_boston);
     private FieldSelector fieldSelector;
     private FusedLocationProviderClient client;
+    private String apiKey;
+    private String TAG = "MainActivityLog";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +97,7 @@ public class MainActivity extends AppCompatActivity
 
         // Retrieve a PlacesClient (previously initialized - see MainActivity)
 
-        String apiKey = getString(R.string.places_api_key);
+        apiKey = getString(R.string.places_api_key);
 
         if (apiKey.equals("")) {
             Toast.makeText(this, "No API Key", Toast.LENGTH_LONG).show();
@@ -93,12 +112,13 @@ public class MainActivity extends AppCompatActivity
 
         // Set up view objects
         responseView = findViewById(R.id.response);
-
+        lat_long = findViewById(R.id.lat_long);
         fieldSelector =
                 new FieldSelector(
                         findViewById(R.id.use_custom_fields), findViewById(R.id.custom_fields_list));
 
         setupAutocompleteSupportFragment();
+
 
         // UI initialization
         setLoading(false);
@@ -131,6 +151,7 @@ public class MainActivity extends AppCompatActivity
 
                 startActivity(intent);
             }
+
             @Override
             public void onError(Status status) {
                 responseView.setText(status.getStatusMessage());
@@ -292,6 +313,9 @@ public class MainActivity extends AppCompatActivity
     private void setLoading(boolean loading) {
         findViewById(R.id.loading).setVisibility(loading ? View.VISIBLE : View.INVISIBLE);
     }
+    private void setLoadingNearby(boolean loading) {
+        findViewById(R.id.loading_nearby).setVisibility(loading ? View.VISIBLE : View.INVISIBLE);
+    }
 
     private void showErrorAlert(@StringRes int messageResId) {
         new AlertDialog.Builder(this)
@@ -299,6 +323,7 @@ public class MainActivity extends AppCompatActivity
                 .setMessage(messageResId)
                 .show();
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -348,37 +373,104 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     public void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION},1);
-        if(ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+        ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, 1);
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if(requestCode == 1) {
+
+        if (requestCode == 1) {
             client = LocationServices.getFusedLocationProviderClient(this);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                Latitude = String.valueOf(R.string.latitude_525_boston);
+//                Longitude = String.valueOf(R.string.longitude_525_boston);
+                Latitude = "42.3376835";
+                Longitude = "-71.0963538";
+                Log.v(TAG,"here 1");
+                Log.v(TAG,"Longitude:" + Longitude);
+                Log.v(TAG,"Latitude:" + Latitude);
+                loadNearByPlaces();
+                return;
+            }
             client.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
                     if (location != null) {
-                        Longitude = Double.toString(location.getLatitude());
-                        Latitude = Double.toString(location.getLongitude());
-                        getNearByLocations(Longitude, Latitude);
-                    }
-                    else{
-                        getNearByLocations(Longitude, Latitude);
+                        Latitude = Double.toString(location.getLatitude());
+                        Longitude = Double.toString(location.getLongitude());
+                        loadNearByPlaces();
+//                        getNearByLocations(Longitude, Latitude);
                     }
                 }
             });
         }
-        if(grantResults[0] == -1){
-            getNearByLocations(Longitude, Latitude);
-        }
     }
 
     private void getNearByLocations(String longitude, String latitude) {
-        Log.v("MainActivity",Longitude);
+        Log.v(TAG,"Longitude:" + Longitude);
+        Log.v(TAG,"Latitude:" + Latitude);
+    }
+
+    private void loadNearByPlaces()
+    {
+        setLoadingNearby(true);
+        RequestQueue requestQueue;
+
+// Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+
+// Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+
+// Instantiate the RequestQueue with the cache and network.
+        requestQueue = new RequestQueue(cache, network);
+
+// Start the queue
+        requestQueue.start();
+        Intent i = getIntent();
+        String type = "restaurant";
+        String field = "id,photos,formatted_address,name,rating,opening_hours,geometry";
+                //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=42.3376842,-71.0963798&rankby=distance&types=restaurant&fields=id,photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyCpe7Vz_R4eRdZClnuF4jLBdAPgJmamFIM
+        StringBuilder googlePlacesUrl =
+                new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        googlePlacesUrl.append("location=").append(Latitude).append(",").append(Longitude);
+        googlePlacesUrl.append("&rankby=").append("distance");
+        googlePlacesUrl.append("&types=").append(type);
+        googlePlacesUrl.append("&fields=").append(field);
+//        googlePlacesUrl.append("&sensor=true");
+        googlePlacesUrl.append("&key=" + apiKey);
+        Log.v(TAG,"Longitude:" + Longitude);
+        Log.v(TAG,"Latitude:" + Latitude);
+//        String googlePlacesUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key="+apiKey;
+        Log.v(TAG, googlePlacesUrl.toString());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, googlePlacesUrl.toString(), null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        lat_long.setText("Response: " + response.toString());
+                        Log.v(TAG, response.toString());
+                        setLoadingNearby(false);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.v(TAG, error.toString());
+                        setLoadingNearby(false);
+                    }
+                });
+
+//// Access the RequestQueue through your singleton class.
+//        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+        requestQueue.add(jsonObjectRequest);
+
     }
 }
