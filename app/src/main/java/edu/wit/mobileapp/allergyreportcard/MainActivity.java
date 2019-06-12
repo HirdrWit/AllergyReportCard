@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -51,17 +52,22 @@ import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.gson.JsonArray;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -77,6 +83,10 @@ public class MainActivity extends AppCompatActivity
     private FusedLocationProviderClient client;
     private String apiKey;
     private String TAG = "MainActivityLog";
+    private ArrayList<String> id_list = new ArrayList<>();
+    private ArrayList<String> name_list = new ArrayList<>();
+    private ArrayList<String> vicinity_list = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +121,7 @@ public class MainActivity extends AppCompatActivity
         placesClient = Places.createClient(this);
 
         // Set up view objects
-        responseView = findViewById(R.id.response);
-        lat_long = findViewById(R.id.lat_long);
+//        lat_long = findViewById(R.id.lat_long);
         fieldSelector =
                 new FieldSelector(
                         findViewById(R.id.use_custom_fields), findViewById(R.id.custom_fields_list));
@@ -125,7 +134,22 @@ public class MainActivity extends AppCompatActivity
 
         requestPermission();
 
-
+        Button restaurant_button = (Button) findViewById(R.id.button_restaurant_nearby);
+        restaurant_button.setOnClickListener(v -> {
+            loadNearByPlaces("restaurant");
+        });
+        Button hotel_button = (Button) findViewById(R.id.button_hotel_nearby);
+        hotel_button.setOnClickListener(v -> {
+            loadNearByPlaces("hotel");
+        });
+        Button amusement_button = (Button) findViewById(R.id.button_amusement_nearby);
+        amusement_button.setOnClickListener(v -> {
+            loadNearByPlaces("point_of_interest");
+        });
+        Button favorites_button = (Button) findViewById(R.id.button_favorites);
+        favorites_button.setOnClickListener(v -> {
+//            lat_long.setText("No Favorites");
+        });
     }
 
     private void setupAutocompleteSupportFragment() {
@@ -395,7 +419,7 @@ public class MainActivity extends AppCompatActivity
                 Log.v(TAG,"here 1");
                 Log.v(TAG,"Longitude:" + Longitude);
                 Log.v(TAG,"Latitude:" + Latitude);
-                loadNearByPlaces();
+                loadNearByPlaces("restaurant");
                 return;
             }
             client.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
@@ -404,7 +428,7 @@ public class MainActivity extends AppCompatActivity
                     if (location != null) {
                         Latitude = Double.toString(location.getLatitude());
                         Longitude = Double.toString(location.getLongitude());
-                        loadNearByPlaces();
+                        loadNearByPlaces("restaurant");
 //                        getNearByLocations(Longitude, Latitude);
                     }
                 }
@@ -417,13 +441,13 @@ public class MainActivity extends AppCompatActivity
         Log.v(TAG,"Latitude:" + Latitude);
     }
 
-    private void loadNearByPlaces()
+    private void loadNearByPlaces(String type)
     {
         setLoadingNearby(true);
         RequestQueue requestQueue;
 
 // Instantiate the cache
-        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        Cache cache = new DiskBasedCache(getCacheDir(), 2*(1024 * 1024)); // 1MB cap
 
 // Set up the network to use HttpURLConnection as the HTTP client.
         Network network = new BasicNetwork(new HurlStack());
@@ -434,7 +458,7 @@ public class MainActivity extends AppCompatActivity
 // Start the queue
         requestQueue.start();
         Intent i = getIntent();
-        String type = "restaurant";
+//        String type = "restaurant";
         String field = "id,photos,formatted_address,name,rating,opening_hours,geometry";
                 //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=42.3376842,-71.0963798&rankby=distance&types=restaurant&fields=id,photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyCpe7Vz_R4eRdZClnuF4jLBdAPgJmamFIM
         StringBuilder googlePlacesUrl =
@@ -447,15 +471,14 @@ public class MainActivity extends AppCompatActivity
         googlePlacesUrl.append("&key=" + apiKey);
         Log.v(TAG,"Longitude:" + Longitude);
         Log.v(TAG,"Latitude:" + Latitude);
-//        String googlePlacesUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key="+apiKey;
         Log.v(TAG, googlePlacesUrl.toString());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, googlePlacesUrl.toString(), null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        lat_long.setText("Response: " + response.toString());
-                        Log.v(TAG, response.toString());
+//                        lat_long.setText("Response: " + response.toString());
+                        parseJSONData(response);
                         setLoadingNearby(false);
                     }
                 }, new Response.ErrorListener() {
@@ -467,10 +490,34 @@ public class MainActivity extends AppCompatActivity
                         setLoadingNearby(false);
                     }
                 });
-
-//// Access the RequestQueue through your singleton class.
-//        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
         requestQueue.add(jsonObjectRequest);
+
+    }
+    private void parseJSONData(JSONObject data){
+        id_list.clear();
+        name_list.clear();
+        vicinity_list.clear();
+//        Log.v(TAG,data.toString());
+
+        try {
+            JSONArray results = data.getJSONArray("results");
+
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject result = results.getJSONObject(i);
+                id_list.add(result.getString("place_id"));
+                name_list.add(result.getString("name"));
+                vicinity_list.add(result.getString("vicinity"));
+            }
+
+            setNearbyLocationView();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void setNearbyLocationView() {
 
     }
 }

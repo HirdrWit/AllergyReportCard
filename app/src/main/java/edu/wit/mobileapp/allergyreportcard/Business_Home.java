@@ -1,6 +1,7 @@
 package edu.wit.mobileapp.allergyreportcard;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,7 +11,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.PhotoMetadata;
@@ -21,7 +33,9 @@ import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -46,6 +60,7 @@ public class Business_Home extends AppCompatActivity {
     private TextView website_TextView;
     private TextView type_TextView;
     private String TAG = "Business_Home";
+    private String apiKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +68,11 @@ public class Business_Home extends AppCompatActivity {
         setContentView(R.layout.content_business__home);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
-
+        apiKey = getString(R.string.places_api_key);
+        if (apiKey.equals("")) {
+            Toast.makeText(this, "No API Key", Toast.LENGTH_LONG).show();
+            return;
+        }
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         String message = intent.getStringExtra("place_data");
@@ -74,7 +93,7 @@ public class Business_Home extends AppCompatActivity {
         fieldSelector =
                 new FieldSelector(
                         findViewById(R.id.use_custom_fields), findViewById(R.id.custom_fields_list));
-
+//
         fetchPlace();
         setValues();
 //        textView.setText(message);
@@ -84,22 +103,8 @@ public class Business_Home extends AppCompatActivity {
         name_TextView.setText(Name);
         address_TextView.setText("Address: " + Address);
         phone_TextView.setText("Call: " + PhoneNumber);
-        if(!PriceLevel.equals("null")){
-            Log.v(TAG, String.valueOf(PriceLevel.equals("null")));
-            Log.v(TAG, PriceLevel);
-            price_TextView.setText(PriceLevel);
-        }
-        else{
-            price_TextView.setVisibility(View.INVISIBLE);
-            price_TextView.setTextSize(0);
-        }
-        if(!Attributions.equals("[]")){
-            attribution_TextView.setText(Attributions);
-        }
-        else{
-            attribution_TextView.setVisibility(View.INVISIBLE);
-            attribution_TextView.setTextSize(0);
-        }
+        price_TextView.setText(PriceLevel);
+        attribution_TextView.setText(Attributions);
         website_TextView.setText("Website: " + WebsiteUri);
         type_TextView.setText(Types);
     }
@@ -108,23 +113,23 @@ public class Business_Home extends AppCompatActivity {
         photoView.setImageBitmap(null);
         final boolean isFetchPhotoChecked = true;
         List<Place.Field> placeFields = getPlaceFields();
-        setLoading(true);
+        setLoadingPhoto(true);
         FetchPlaceRequest request = FetchPlaceRequest.newInstance(Id, placeFields);//added
         Task<FetchPlaceResponse> placeTask = placesClient.fetchPlace(request);
 
         placeTask.addOnSuccessListener(
-            (response) -> {
-                if (isFetchPhotoChecked) {
-                    attemptFetchPhoto(response.getPlace());
-                }
-            });
+                (response) -> {
+                    if (isFetchPhotoChecked) {
+                        attemptFetchPhoto(response.getPlace());
+                    }
+                });
 
         placeTask.addOnFailureListener(
-            (exception) -> {
-                exception.printStackTrace();
-             });
+                (exception) -> {
+                    exception.printStackTrace();
+                });
 
-        placeTask.addOnCompleteListener(response -> setLoading(false));
+        placeTask.addOnCompleteListener(response -> setLoadingPhoto(false));
     }
 
     private void attemptFetchPhoto(Place place) {
@@ -141,56 +146,112 @@ public class Business_Home extends AppCompatActivity {
      */
     private void fetchPhoto(PhotoMetadata photoMetadata) {
         photoView.setImageBitmap(null);
-        setLoading(true);
-        FetchPhotoRequest.Builder photoRequestBuilder = FetchPhotoRequest.builder(photoMetadata);photoRequestBuilder.setMaxHeight(500); //added
+        setLoadingPhoto(true);
+        FetchPhotoRequest.Builder photoRequestBuilder = FetchPhotoRequest.builder(photoMetadata);
+        photoRequestBuilder.setMaxHeight(500); //added
         Task<FetchPhotoResponse> photoTask = placesClient.fetchPhoto(photoRequestBuilder.build());
 
         photoTask.addOnSuccessListener(
-            response -> {
-                photoView.setImageBitmap(response.getBitmap());
-            });
+                response -> {
+                    photoView.setImageBitmap(response.getBitmap());
+                });
 
         photoTask.addOnFailureListener(
-            exception -> {
-                exception.printStackTrace();
-            });
+                exception -> {
+                    exception.printStackTrace();
+                });
 
-        photoTask.addOnCompleteListener(response -> setLoading(false));
+        photoTask.addOnCompleteListener(response -> setLoadingPhoto(false));
     }
+
     private List<Place.Field> getPlaceFields() {
         return fieldSelector.getAllFields();
     }
-    private void setLoading(boolean loading) {
+
+    private void setLoadingPhoto(boolean loading) {
         findViewById(R.id.loading).setVisibility(loading ? View.VISIBLE : View.INVISIBLE);
     }
-    private void getValues(String message) {
-        String[] values;
-        String delimiter = "__";
-        values = message.split(delimiter);
-        Name = values[0];
-        Address = values[1];
-        Id = values[2];
-        PhoneNumber = values[3];
-        OpeningHours = values[4];
-        PriceLevel = values[5];
-        Attributions = values[6];
-        WebsiteUri = values[7];
-
-        Types = values[8];
-        Types = Types.replace('[', '\0');
-        Types = Types.replace(']', '\0');
-        String[] temp_values;
-        String d = ",";
-        temp_values = Types.split(d);
-        Types = temp_values[0];
-//        Log.v("Business_Home", Name);
-//        Log.v("Business_Home", Address);
-//        Log.v("Business_Home", Id);
-//        Log.v("Business_Home", PhoneNumber);
-//        Log.v("Business_Home", OpeningHours);
-//        Log.v("Business_Home", PriceLevel);
-//        Log.v("Business_Home", Attributions);
-//        Log.v("Business_Home", WebsiteUri);
-//        Log.v("Business_Home", Types);
+    private void setLoadingData(boolean loading) {
+        findViewById(R.id.dataloading).setVisibility(loading ? View.VISIBLE : View.INVISIBLE);
     }
+
+    private void getValues(String id) {
+        setLoadingData(true);
+        RequestQueue requestQueue;
+
+        Cache cache = new DiskBasedCache(getCacheDir(), 2*(1024 * 1024)); // 1MB cap
+
+        Network network = new BasicNetwork(new HurlStack());
+
+        requestQueue = new RequestQueue(cache, network);
+
+// Start the queue
+        requestQueue.start();
+        Intent i = getIntent();
+//        String type = "restaurant";
+        String field = "id,photos,formatted_address,name,rating,opening_hours,geometry";
+        //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=42.3376842,-71.0963798&rankby=distance&types=restaurant&fields=id,photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyCpe7Vz_R4eRdZClnuF4jLBdAPgJmamFIM
+
+        name_TextView = findViewById(R.id.places_name);
+        address_TextView = findViewById(R.id.places_address);
+        phone_TextView = findViewById(R.id.places_phone);
+        price_TextView = findViewById(R.id.places_price);
+        attribution_TextView = findViewById(R.id.places_attribution);
+        website_TextView = findViewById(R.id.places_website);
+        type_TextView = findViewById(R.id.places_type);
+        Id = id;
+//&fields=name,rating,formatted_phone_number&key=YOUR_API_KEY
+        StringBuilder googlePlacesUrl =
+                new StringBuilder("https://maps.googleapis.com/maps/api/place/details/json?");
+        googlePlacesUrl.append("placeid=").append(id);
+        googlePlacesUrl.append("&fields=").append("name,formatted_address,formatted_phone_number,price_level,types,website,type");
+        googlePlacesUrl.append("&key=" + apiKey);
+        Log.v(TAG, googlePlacesUrl.toString());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, googlePlacesUrl.toString(), null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.v(TAG, response.toString());
+
+                        parseJSONData(response);
+                        setLoadingData(false);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.v(TAG, error.toString());
+                        setLoadingData(false);
+                    }
+                });
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    private void parseJSONData(JSONObject data) {
+        try {
+            JSONObject results = data.getJSONObject("result");
+            Name = results.getString("name");
+            Address = results.getString("formatted_address");
+            PhoneNumber = results.getString("formatted_phone_number");
+            PriceLevel = results.getString("name");
+            Attributions = "";
+            WebsiteUri = results.getString("website");
+            Types = results.getString("types");
+            Log.v(TAG,Name);
+            Log.v(TAG,Address);
+            Log.v(TAG,PhoneNumber);
+            Log.v(TAG,PriceLevel);
+            Log.v(TAG,Attributions);
+            Log.v(TAG,WebsiteUri);
+            Log.v(TAG,Types);
+
+            setValues();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
