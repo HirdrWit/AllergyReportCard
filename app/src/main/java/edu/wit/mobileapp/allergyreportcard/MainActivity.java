@@ -56,8 +56,10 @@ import com.google.gson.JsonArray;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -140,16 +142,17 @@ public class MainActivity extends AppCompatActivity
         });
         Button hotel_button = (Button) findViewById(R.id.button_hotel_nearby);
         hotel_button.setOnClickListener(v -> {
-            loadNearByPlaces("hotel");
+            loadNearByPlaces("lodging");
         });
         Button amusement_button = (Button) findViewById(R.id.button_amusement_nearby);
         amusement_button.setOnClickListener(v -> {
-            loadNearByPlaces("point_of_interest");
+            loadNearByPlaces("museum");
         });
         Button favorites_button = (Button) findViewById(R.id.button_favorites);
         favorites_button.setOnClickListener(v -> {
 //            lat_long.setText("No Favorites");
         });
+
     }
 
     private void setupAutocompleteSupportFragment() {
@@ -509,15 +512,27 @@ public class MainActivity extends AppCompatActivity
                 vicinity_list.add(result.getString("vicinity"));
             }
 
-            setNearbyLocationView();
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        setNearbyLocationView();
     }
 
     private void setNearbyLocationView() {
+        ListView list;
+        NearbyListAdapter adapter=new NearbyListAdapter(this, name_list,vicinity_list);
+        list=(ListView)findViewById(R.id.list_view);
+        list.setAdapter(adapter);
+
+        list.setOnItemClickListener((parent, view, position, id) -> {
+
+            Intent intent = new Intent(MainActivity.this, Business_Home.class);
+            intent = intent.putExtra("place_data", id_list.get(position));
+
+            startActivity(intent);
+        });
 
     }
 }

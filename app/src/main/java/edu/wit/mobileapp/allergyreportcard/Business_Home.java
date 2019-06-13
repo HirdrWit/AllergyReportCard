@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,9 @@ public class Business_Home extends AppCompatActivity {
     private TextView attribution_TextView;
     private TextView website_TextView;
     private TextView type_TextView;
+    private Button button_place_phone;
+    private Button button_place_website;
+    private Button button_place_address;
     private String TAG = "Business_Home";
     private String apiKey;
 
@@ -79,12 +83,15 @@ public class Business_Home extends AppCompatActivity {
 
         // Capture the layout's TextView and set the string as its text
         name_TextView = findViewById(R.id.places_name);
-        address_TextView = findViewById(R.id.places_address);
-        phone_TextView = findViewById(R.id.places_phone);
-        price_TextView = findViewById(R.id.places_price);
-        attribution_TextView = findViewById(R.id.places_attribution);
-        website_TextView = findViewById(R.id.places_website);
+//        address_TextView = findViewById(R.id.places_address);
+//        phone_TextView = findViewById(R.id.places_phone);
+//        price_TextView = findViewById(R.id.places_price);
+//        attribution_TextView = findViewById(R.id.places_attribution);
+//        website_TextView = findViewById(R.id.places_website);
         type_TextView = findViewById(R.id.places_type);
+        button_place_address = findViewById(R.id.button_place_address);
+        button_place_phone = findViewById(R.id.button_place_phone);
+        button_place_website = findViewById(R.id.button_place_website);
 
         getValues(message);
 
@@ -101,11 +108,14 @@ public class Business_Home extends AppCompatActivity {
 
     private void setValues() {
         name_TextView.setText(Name);
-        address_TextView.setText("Address: " + Address);
-        phone_TextView.setText("Call: " + PhoneNumber);
-        price_TextView.setText(PriceLevel);
-        attribution_TextView.setText(Attributions);
-        website_TextView.setText("Website: " + WebsiteUri);
+//        address_TextView.setText("Address: " + Address);
+//        phone_TextView.setText("Call: " + PhoneNumber);
+        button_place_address.setText(Address);
+        button_place_phone.setText(PhoneNumber);
+//        price_TextView.setText(PriceLevel);
+//        attribution_TextView.setText(Attributions);
+//        website_TextView.setText("Website: " + WebsiteUri);
+        button_place_website.setText(WebsiteUri);
         type_TextView.setText(Types);
     }
 
@@ -193,11 +203,11 @@ public class Business_Home extends AppCompatActivity {
         //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=42.3376842,-71.0963798&rankby=distance&types=restaurant&fields=id,photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyCpe7Vz_R4eRdZClnuF4jLBdAPgJmamFIM
 
         name_TextView = findViewById(R.id.places_name);
-        address_TextView = findViewById(R.id.places_address);
-        phone_TextView = findViewById(R.id.places_phone);
-        price_TextView = findViewById(R.id.places_price);
-        attribution_TextView = findViewById(R.id.places_attribution);
-        website_TextView = findViewById(R.id.places_website);
+//        address_TextView = findViewById(R.id.places_address);
+//        phone_TextView = findViewById(R.id.places_phone);
+//        price_TextView = findViewById(R.id.places_price);
+//        attribution_TextView = findViewById(R.id.places_attribution);
+//        website_TextView = findViewById(R.id.places_website);
         type_TextView = findViewById(R.id.places_type);
         Id = id;
 //&fields=name,rating,formatted_phone_number&key=YOUR_API_KEY
@@ -234,24 +244,30 @@ public class Business_Home extends AppCompatActivity {
             JSONObject results = data.getJSONObject("result");
             Name = results.getString("name");
             Address = results.getString("formatted_address");
+            Types = results.getString("types");
+            Log.v(TAG,Name);
+            Log.v(TAG,Address);
+            Log.v(TAG,Types);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            JSONObject results = data.getJSONObject("result");
             PhoneNumber = results.getString("formatted_phone_number");
             PriceLevel = results.getString("name");
             Attributions = "";
             WebsiteUri = results.getString("website");
-            Types = results.getString("types");
-            Log.v(TAG,Name);
-            Log.v(TAG,Address);
             Log.v(TAG,PhoneNumber);
             Log.v(TAG,PriceLevel);
             Log.v(TAG,Attributions);
             Log.v(TAG,WebsiteUri);
-            Log.v(TAG,Types);
-
-            setValues();
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        setValues();
+
+
     }
 
 }

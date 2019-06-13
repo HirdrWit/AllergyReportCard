@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:visibility="invisible"/>
-            
+
             <TextView
                 android:id="@+id/places_name"
                 android:textSize="30dp"
@@ -66,35 +66,75 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
-            <TextView
-                android:id="@+id/places_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:autoLink="map"/>
-            <TextView
-                android:id="@+id/places_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:textColor="@color/colorAccent"
-                android:autoLink="phone" />
-            <TextView
-                android:id="@+id/places_website"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:autoLink="web" />
-            <TextView
-                android:id="@+id/places_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-            <TextView
-                android:id="@+id/places_attribution"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <Button
+                    android:id="@+id/button_place_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="1sp"
+                    android:backgroundTint="@color/quantum_white_text"
+                    android:textColor="@color/quantum_white_text"
+                    android:drawableTop="@drawable/phone"
+                    android:autoLink="phone"
+                    />
+                <Button
+                    android:id="@+id/button_place_website"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="1sp"
+                    android:backgroundTint="@color/quantum_white_text"
+                    android:textColor="@color/quantum_white_text"
+                    android:drawableTop="@drawable/earth"
+                    android:autoLink="web"
+                    />
+                <Button
+                    android:id="@+id/button_place_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="1sp"
+                    android:backgroundTint="@color/quantum_white_text"
+                    android:textColor="@color/quantum_white_text"
+                    android:drawableTop="@drawable/map_marker"
+                    android:autoLink="map"
+                    />
+            </LinearLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/places_address"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="@color/colorAccent"-->
+                <!--android:autoLink="map"/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/places_phone"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:ems="10"-->
+                <!--android:textColor="@color/colorAccent"-->
+                <!--android:autoLink="phone" />-->
+            <!--<TextView-->
+                <!--android:id="@+id/places_website"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="@color/colorAccent"-->
+                <!--android:autoLink="web" />-->
+            <!--<TextView-->
+                <!--android:id="@+id/places_price"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/places_attribution"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--/>-->
 
             <LinearLayout
                 android:paddingTop="20dp"
@@ -116,7 +156,8 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimary"
                     android:paddingRight="0dp"
-                    android:text="Add Review" />
+                    android:text="Add Review"
+                    />
 
             </LinearLayout>
 

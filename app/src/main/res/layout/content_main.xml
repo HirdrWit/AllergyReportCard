@@ -92,53 +92,53 @@
                     <Button
                         android:id="@+id/button_restaurant_nearby"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="Restaurant"
                         android:textSize="9dp"
-                        android:backgroundTint="@color/colorPrimary"
+                        android:backgroundTint="@color/quantum_white_text"
                         android:drawableTop="@drawable/ic_menu_share"
                     />
                     <Button
                         android:id="@+id/button_hotel_nearby"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="Hotel"
                         android:textSize="9dp"
-                        android:backgroundTint="@color/colorPrimary"
+                        android:backgroundTint="@color/quantum_white_text"
                         android:drawableTop="@drawable/ic_menu_share"
                         />
                     <Button
                         android:id="@+id/button_amusement_nearby"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="Amusement"
                         android:textSize="9dp"
-                        android:backgroundTint="@color/colorPrimary"
+                        android:backgroundTint="@color/quantum_white_text"
                         android:drawableTop="@drawable/ic_menu_share"
                         />
                     <Button
                         android:id="@+id/button_favorites"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:text="Favorite"
                         android:textSize="9dp"
-                        android:textColor="@color/quantum_white_text"
-                        android:backgroundTint="@color/colorPrimary"
+                        android:backgroundTint="@color/quantum_white_text"
                         android:drawableTop="@drawable/ic_menu_share"
                         />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/lat_long"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
+
+
             </LinearLayout>
         </ScrollView>
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <ProgressBar
             android:id="@+id/loading_nearby"
             style="?android:attr/progressBarStyle"
