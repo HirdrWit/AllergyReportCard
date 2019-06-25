@@ -450,7 +450,7 @@ public class MainActivity extends AppCompatActivity
         RequestQueue requestQueue;
 
 // Instantiate the cache
-        Cache cache = new DiskBasedCache(getCacheDir(), 2*(1024 * 1024)); // 1MB cap
+        Cache cache = new DiskBasedCache(getCacheDir(), (1024 * 1024)); // 1MB cap
 
 // Set up the network to use HttpURLConnection as the HTTP client.
         Network network = new BasicNetwork(new HurlStack());

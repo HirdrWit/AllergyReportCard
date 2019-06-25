@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#d3e7d8"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:backgroundTint="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/review_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Restaurant Review"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="75dp"
+                android:textSize="20dp"
+                android:textColor="@color/quantum_white_text"/>
+
+            <Button
+                android:id="@+id/review_prompt_close"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="x" />
+        </LinearLayout>
+
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="315dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:outlineSpotShadowColor="@color/colorQRank">
+
+                <TextView
+                    android:id="@+id/review_instruct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="Please score this locations ability to accommodate each category,"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/dairy_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dairy : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/dairy_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/dairy_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/dairy_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/dairy_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/dairy_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/dairy_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/dairy_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/egg_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Eggs : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/eggs_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/egg_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/egg_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/egg_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/egg_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/egg_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/egg_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/fish_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fish : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/fish_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/fish_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/fish_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/fish_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/fish_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/fish_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/fish_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/shellfish_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Shellfish : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/shellfish_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/shellfish_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/shellfish_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/shellfish_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/shellfish_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/shellfish_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/shellfish_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/peanuts_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Peanuts : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/peanuts_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/peanuts_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/peanuts_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/peanuts_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/peanuts_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/peanuts_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/peanuts_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/tree_nuts_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tree Nuts : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/tree_nuts_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/tree_nuts_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/tree_nuts_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/tree_nuts_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/tree_nuts_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/tree_nuts_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/tree_nuts_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/wheat_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wheat : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/wheat_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/wheat_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/wheat_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/wheat_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/wheat_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/wheat_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/wheat_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/soy_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Soy : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/soy_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/soy_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/soy_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/soy_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/soy_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/soy_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/soy_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/ff_cleaning_products_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fragrance Free Cleaning Products : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/ff_cleaning_products_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/ff_cleaning_products_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/ff_cleaning_products_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/ff_cleaning_products_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/ff_cleaning_products_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/ff_cleaning_products_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/ff_cleaning_products_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/ff_staff_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fragrance Free Staff : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/ff_staff_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/ff_staff_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/ff_staff_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/ff_staff_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/ff_staff_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/ff_staff_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/ff_staff_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/sesame_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sesame : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/sesame_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/sesame_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/sesame_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/sesame_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/sesame_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/sesame_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/sesame_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/rice_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rice : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/rice_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rice_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/rice_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/rice_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/rice_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/rice_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/rice_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/sulphites_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sulphites : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/sulphites_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/sulphites_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/sulphites_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/sulphites_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/sulphites_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/sulphites_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/sulphites_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/es_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Electrical Sensitivity : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/es_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/es_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/es_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/es_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/es_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/es_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/es_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/text_review_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Write About Your Experience! : "
+                    android:textSize="15sp"/>
+                <EditText
+                    android:id="@+id/text_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_gravity="top"
+                    android:textSize="15sp"
+                    android:textColor="@color/quantum_black_100"
+                    android:inputType="textMultiLine" />
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/review_prompt_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:paddingRight="0dp"
+            android:text="Save Review!" />
+
+    </LinearLayout>
+
+</RelativeLayout>

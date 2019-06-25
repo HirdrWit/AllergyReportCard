@@ -34,7 +34,6 @@ public class NearbyListAdapter extends ArrayAdapter<String> {
         View rowView=inflater.inflate(R.layout.nearby_listview, null,true);
 
         TextView titleText = (TextView) rowView.findViewById(R.id.places_name);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.photo);
         TextView subtitleText = (TextView) rowView.findViewById(R.id.places_address);
 
         titleText.setText(names.get(position));

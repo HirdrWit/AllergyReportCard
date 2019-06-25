@@ -2,6 +2,15 @@
 <resources>
     <color name="colorPrimary">#BBD87D</color>
     <color name="colorPrimaryDark">#8AA05D</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#00a6de</color>
+    <color name="invisibleAccent">#fff</color>
+    <color name="textAccent">#000</color>
+    <color name="colorARank">#058b00</color>
+    <color name="colorBRank">#63c700</color>
+    <color name="colorCRank">#c2a400</color>
+    <color name="colorDRank">@color/quantum_orange</color>
+    <color name="colorFRank">@color/quantum_googred</color>
+    <color name="colorQRank">@color/quantum_grey</color>
+
 
 </resources>

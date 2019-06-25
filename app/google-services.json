@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "776909232863",
+    "firebase_url": "https://allergy-report-c-1558096333774.firebaseio.com",
+    "project_id": "allergy-report-c-1558096333774",
+    "storage_bucket": "allergy-report-c-1558096333774.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776909232863:android:ebae0d4264528397",
+        "android_client_info": {
+          "package_name": "edu.wit.mobileapp.allergyreportcard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776909232863-i7av2e43nsratgef2l0ibp1di8hfr1tp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9z0FF9Kys0E9WOrQjjsvD1QT3dT5qEJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776909232863-i7av2e43nsratgef2l0ibp1di8hfr1tp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

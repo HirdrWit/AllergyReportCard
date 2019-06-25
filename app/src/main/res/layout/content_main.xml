@@ -97,7 +97,7 @@
                         android:text="Restaurant"
                         android:textSize="9dp"
                         android:backgroundTint="@color/quantum_white_text"
-                        android:drawableTop="@drawable/ic_menu_share"
+                        android:drawableTop="@drawable/silverware_fork_knife"
                     />
                     <Button
                         android:id="@+id/button_hotel_nearby"
@@ -107,7 +107,7 @@
                         android:text="Hotel"
                         android:textSize="9dp"
                         android:backgroundTint="@color/quantum_white_text"
-                        android:drawableTop="@drawable/ic_menu_share"
+                        android:drawableTop="@drawable/hotel"
                         />
                     <Button
                         android:id="@+id/button_amusement_nearby"
@@ -117,7 +117,7 @@
                         android:text="Amusement"
                         android:textSize="9dp"
                         android:backgroundTint="@color/quantum_white_text"
-                        android:drawableTop="@drawable/ic_menu_share"
+                        android:drawableTop="@drawable/ferris_wheel"
                         />
                     <Button
                         android:id="@+id/button_favorites"
@@ -127,7 +127,7 @@
                         android:text="Favorite"
                         android:textSize="9dp"
                         android:backgroundTint="@color/quantum_white_text"
-                        android:drawableTop="@drawable/ic_menu_share"
+                        android:drawableTop="@drawable/star"
                         />
                 </LinearLayout>
 
