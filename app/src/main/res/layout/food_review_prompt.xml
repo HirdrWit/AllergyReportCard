@@ -5,8 +5,6 @@
     android:layout_height="wrap_content"
     android:background="#d3e7d8"
     >
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -1053,7 +1051,8 @@
                     android:layout_gravity="top"
                     android:textSize="15sp"
                     android:textColor="@color/quantum_black_100"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    />
             </LinearLayout>
         </ScrollView>
 

@@ -1,9 +1,11 @@
 package edu.wit.mobileapp.allergyreportcard;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -270,8 +272,20 @@ public class Business_Home extends AppCompatActivity {
                     sulphites_text = sulphites_radioButton.getText().toString();
                     es_text = es_radioButton.getText().toString();
                     text_review_text = text_review.getText().toString();
-                    saveFoodReview();
-                    popupWindow.dismiss();
+                    if( TextUtils.isEmpty(text_review.getText())){
+                        text_review.setError( "Please write a review." );
+
+                        Context context = getApplicationContext();
+                        CharSequence text = "Please write a review.";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                    else{
+                        saveFoodReview();
+                        popupWindow.dismiss();
+                    }
                 }
                 else if(Types.contains("lodging")){
 

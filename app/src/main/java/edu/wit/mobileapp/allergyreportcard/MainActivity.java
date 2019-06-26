@@ -429,6 +429,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onSuccess(Location location) {
                     if (location != null) {
+                        Log.v("Error","Error 1");
                         Latitude = Double.toString(location.getLatitude());
                         Longitude = Double.toString(location.getLongitude());
                         loadNearByPlaces("restaurant");

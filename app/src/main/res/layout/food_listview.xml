@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,116 +10,60 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/dairy"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name" />
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp">
 
-        <TextView
-            android:id="@+id/eggs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Review Holder" />
 
-        <TextView
-            android:id="@+id/fish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Address" />
-        <TextView
-            android:id="@+id/shellfish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name" />
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/peanuts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Review Holder" />
+                app:srcCompat="@mipmap/ic_launcher_round" />
 
-        <TextView
-            android:id="@+id/tree_nuts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Address" />
-        <TextView
-            android:id="@+id/wheat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name" />
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:layout_marginLeft="10dp"
+                android:text="Anonymous" />
 
-        <TextView
-            android:id="@+id/soy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Review Holder" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/ff_cleaning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Address" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="100dp"
+                android:textSize="18dp"
+                android:text="Grade:" />
 
-        <TextView
-            android:id="@+id/ff_staff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Review Holder" />
-
-        <TextView
-            android:id="@+id/sesame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Address" />
-        <TextView
-            android:id="@+id/rice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/sulphites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Review Holder" />
-
-        <TextView
-            android:id="@+id/es"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-        android:text="Address" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/review_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:paddingRight="5dp"
+                app:srcCompat="@drawable/help_circle_outline" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/AL_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Review Holder" />
+            android:layout_margin="13dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="18dp"
+            android:text="No Review" />
 
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Address" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
