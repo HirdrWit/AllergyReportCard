@@ -2,6 +2,7 @@ package edu.wit.mobileapp.allergyreportcard;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -53,6 +54,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,6 +129,7 @@ public class Business_Home extends AppCompatActivity {
     public static final String TEXT_KEY = "text_review";
     public static final String USERNAME_KEY = "user_name";
     public static final String USER_ID_KEY = "user_id";
+    private int tot_review_count = 0;
 
     private DocumentReference mDocRef;
     private CollectionReference mColRef;
@@ -391,7 +394,117 @@ public class Business_Home extends AppCompatActivity {
                 username_AL);
         list=(ListView)findViewById(R.id.list_view);
         list.setAdapter(adapter);
+        getOverallReviewImage();
+    }
 
+    private void getOverallReviewImage() {
+        int score = getTotalScore();
+        ImageView reviewImage = (ImageView) findViewById(R.id.review_image);
+        Drawable img_value = setImageScore(score);
+        reviewImage.setImageDrawable(img_value);
+    }
+    private Drawable setImageScore(int score) {
+        if(score>80){
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                return getApplicationContext().getDrawable(R.drawable.alpha_a_circle_outline);
+            } else {
+                return getResources().getDrawable(R.drawable.alpha_a_circle_outline);
+            }
+        }
+        else if(score > 60){
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                return getApplicationContext().getDrawable(R.drawable.alpha_b_circle_outline);
+            } else {
+                return getResources().getDrawable(R.drawable.alpha_b_circle_outline);
+            }
+        }
+        else if(score > 40){
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                return getApplicationContext().getDrawable(R.drawable.alpha_c_circle_outline);
+            } else {
+                return getResources().getDrawable(R.drawable.alpha_c_circle_outline);
+            }
+        }
+        else if(score > 20){
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                return getApplicationContext().getDrawable(R.drawable.alpha_d_circle_outline);
+            } else {
+                return getResources().getDrawable(R.drawable.alpha_d_circle_outline);
+            }
+        }
+        else if(score>0){
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                return getApplicationContext().getDrawable(R.drawable.alpha_f_circle_outline);
+            } else {
+                return getResources().getDrawable(R.drawable.alpha_f_circle_outline);
+            }
+        }
+        else{
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                return getApplicationContext().getDrawable(R.drawable.help_circle_outline);
+            } else {
+                return getResources().getDrawable(R.drawable.help_circle_outline);
+            }
+        }
+
+    }
+    private int getTotalScore() {
+        int dairy_rating = getScore(dairy_AL);
+        int eggs_rating = getScore(eggs_AL);
+        int fish_rating = getScore(fish_AL);
+        int shellfish_rating = getScore(shellfish_AL);
+        int peanuts_rating = getScore(peanuts_AL);
+        int tree_nuts_rating = getScore(tree_nuts_AL);
+        int wheat_rating = getScore(wheat_AL);
+        int soy_rating = getScore(soy_AL);
+        int ff_cleaning_rating = getScore(ff_cleaning_AL);
+        int ff_staff_rating = getScore(ff_staff_AL);
+        int seasame_rating = getScore(sesame_AL);
+        int rice_rating = getScore(rice_AL);
+        int sulphites_rating = getScore(sulphites_AL);
+        int es_rating = getScore(es_AL);
+
+        int sum = dairy_rating + eggs_rating + fish_rating + shellfish_rating + peanuts_rating + tree_nuts_rating + wheat_rating
+                + soy_rating + ff_cleaning_rating + ff_staff_rating + seasame_rating + rice_rating + sulphites_rating + es_rating;
+        if(tot_review_count>0) {
+            return(sum / tot_review_count);
+        }
+        return 0;
+    }
+
+    private int getScore(ArrayList<String> al) {
+        int tot = 0;
+        int review_count = 0;
+        for(int i = 0; i<al.size(); i++){
+            if(al.get(i).equals("A")){
+                review_count +=1;
+                tot += 100;
+            }
+            else if(al.get(i).equals("B")){
+                review_count +=1;
+                tot += 80;
+            }
+            else if(al.get(i).equals("C")){
+                review_count +=1;
+                tot += 60;
+            }
+            else if(al.get(i).equals("D")){
+                review_count +=1;
+                tot += 40;
+            }
+            else if(al.get(i).equals("F")){
+                review_count +=1;
+                tot += 20;
+            }
+            else{
+                tot += 0;
+            }
+        }
+        if(tot>0){
+            tot_review_count+=1;
+            return tot/review_count;
+        }
+        return 0;
     }
 
     public void FetchNewReview(){
@@ -402,9 +515,24 @@ public class Business_Home extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             if (Types.contains("food") || Types.contains("restaurant")) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.v(TAG, document.getData().get("dairy").toString());
-                                }
+                                dairy_AL.add(dairy_text);
+                                eggs_AL.add(eggs_text);
+                                fish_AL.add(fish_text);
+                                shellfish_AL.add(shellfish_text);
+                                peanuts_AL.add(peanuts_text);
+                                tree_nuts_AL.add(tree_nuts_text);
+                                wheat_AL.add(wheat_text);
+                                soy_AL.add(soy_text);
+                                ff_cleaning_AL.add(ff_cleaning_text);
+                                ff_staff_AL.add(ff_staff_text);
+                                sesame_AL.add(sesame_text);
+                                rice_AL.add(rice_text);
+                                sulphites_AL.add(sulphites_text);
+                                es_AL.add(es_text);
+                                AL_review_AL.add(text_review_text);
+                                username_AL.add("Beta User");
+                                setFoodAdapter();
+
                             }
                         } else {
                             Log.v(TAG, "Error getting documents: ", task.getException());
