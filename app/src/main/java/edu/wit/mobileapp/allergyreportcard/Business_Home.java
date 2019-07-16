@@ -88,13 +88,16 @@ public class Business_Home extends AppCompatActivity {
     private String wheat_text;
     private String soy_text;
     private String ff_cleaning_text;
+    private String ff_linens_text;
     private String ff_staff_text;
+    private String smoke_text;
+    private String floor_text;
     private String sesame_text;
     private String rice_text;
     private String sulphites_text;
     private String es_text;
     private String text_review_text;
-
+    private Boolean already_loaded_reviews = false;
     private ArrayList<String> dairy_AL= new ArrayList<>();
     private ArrayList<String> eggs_AL= new ArrayList<>();
     private ArrayList<String> fish_AL= new ArrayList<>();
@@ -105,12 +108,15 @@ public class Business_Home extends AppCompatActivity {
     private ArrayList<String> soy_AL= new ArrayList<>();
     private ArrayList<String> ff_cleaning_AL= new ArrayList<>();
     private ArrayList<String> ff_staff_AL= new ArrayList<>();
+    private ArrayList<String> ff_linens_AL= new ArrayList<>();
+    private ArrayList<String> smoke_AL= new ArrayList<>();
     private ArrayList<String> sesame_AL= new ArrayList<>();
     private ArrayList<String> rice_AL= new ArrayList<>();
     private ArrayList<String> sulphites_AL= new ArrayList<>();
     private ArrayList<String> es_AL= new ArrayList<>();
     private ArrayList<String> AL_review_AL= new ArrayList<>();
     private ArrayList<String> username_AL= new ArrayList<>();
+    private ArrayList<String> floor_AL= new ArrayList<>();
 
     public static final String DAIRY_KEY = "dairy";
     public static final String EGGS_KEY = "eggs";
@@ -122,10 +128,13 @@ public class Business_Home extends AppCompatActivity {
     public static final String SOY_KEY = "soy";
     public static final String FF_C_KEY = "fragrance_free_cleaning";
     public static final String FF_S_KEY = "fragrance_free_staff";
+    public static final String FF_L_KEY = "fragrance_free_linens";
+    public static final String SMOKE_KEY = "smoke";
     public static final String SESAME_KEY = "sesame";
     public static final String RICE_KEY = "rice";
     public static final String SULPHITES_KEY = "sulphites";
     public static final String ES_KEY = "electrical_sensitivity";
+    public static final String FLOOR_KEY = "floor";
     public static final String TEXT_KEY = "text_review";
     public static final String USERNAME_KEY = "user_name";
     public static final String USER_ID_KEY = "user_id";
@@ -177,15 +186,15 @@ public class Business_Home extends AppCompatActivity {
         Log.v(TAG,Types);
         if(Types.contains("food") || Types.contains("restaurant")) {
             popupView = inflater.inflate(R.layout.food_review_prompt, null);
-            Log.v(TAG,"Working");
+            Log.v(TAG,"Food Review Prompt");
         }
         else if(Types.contains("lodging")){
-            popupView = inflater.inflate(R.layout.food_review_prompt, null);
-            Log.v(TAG,"Not Working");
+            popupView = inflater.inflate(R.layout.hotel_review_prompt, null);
+            Log.v(TAG,"Lodging Review Prompt");
         }
         else if(Types.contains("car_rental")){
             popupView = inflater.inflate(R.layout.food_review_prompt, null);
-            Log.v(TAG,"Not Working");
+            Log.v(TAG,"Car Review Prompt");
         }
         else{
             popupView = inflater.inflate(R.layout.food_review_prompt, null);
@@ -292,7 +301,46 @@ public class Business_Home extends AppCompatActivity {
                 }
                 else if(Types.contains("lodging")){
 
-                    Log.v(TAG,"Not Working");
+                    RadioGroup ff_cleaning_products_radioGroup = (RadioGroup) popupView.findViewById(R.id.fragrance_free_cleaning_RadioGroup);
+                    RadioGroup ff_staff_radioGroup = (RadioGroup) popupView.findViewById(R.id.fragrance_free_staff_RadioGroup);
+                    RadioGroup ff_linen_radioGroup = (RadioGroup) popupView.findViewById(R.id.fragrance_free_linens_RadioGroup);
+                    RadioGroup smoke_radioGroup = (RadioGroup) popupView.findViewById(R.id.smoke_free_RadioGroup);
+                    RadioGroup floor_radioGroup = (RadioGroup) popupView.findViewById(R.id.floor_RadioGroup);
+                    EditText text_review = (EditText) popupView.findViewById(R.id.text_review);
+
+                    int ff_cleaning_SelectedId = ff_cleaning_products_radioGroup.getCheckedRadioButtonId();
+                    int ff_staff_SelectedId = ff_staff_radioGroup.getCheckedRadioButtonId();
+                    int ff_linen_SelectedId = ff_linen_radioGroup.getCheckedRadioButtonId();
+                    int smokeSelectedId = smoke_radioGroup.getCheckedRadioButtonId();
+                    int floorSelectedId = floor_radioGroup.getCheckedRadioButtonId();
+
+
+                    RadioButton ff_cleaning_radioButton = (RadioButton) popupView.findViewById(ff_cleaning_SelectedId);
+                    RadioButton ff_staff_radioButton = (RadioButton) popupView.findViewById(ff_staff_SelectedId);
+                    RadioButton ff_linen_radioButton = (RadioButton) popupView.findViewById(ff_linen_SelectedId);
+                    RadioButton smoke_radioButton = (RadioButton) popupView.findViewById(smokeSelectedId);
+                    RadioButton floor_radioButton = (RadioButton) popupView.findViewById(floorSelectedId);
+
+                    ff_cleaning_text = ff_cleaning_radioButton.getText().toString();
+                    ff_staff_text = ff_staff_radioButton.getText().toString();
+                    ff_linens_text = ff_linen_radioButton.getText().toString();
+                    smoke_text = smoke_radioButton.getText().toString();
+                    floor_text = floor_radioButton.getText().toString();
+                    text_review_text = text_review.getText().toString();
+                    if( TextUtils.isEmpty(text_review.getText())){
+                        text_review.setError( "Please write a review." );
+
+                        Context context = getApplicationContext();
+                        CharSequence text = "Please write a review.";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                    else{
+                        saveHotelReview();
+                        popupWindow.dismiss();
+                    }
                 }
                 else if(Types.contains("car_rental")){
 
@@ -306,7 +354,7 @@ public class Business_Home extends AppCompatActivity {
     }
 
     public void saveFoodReview() { //set to boolean
-        mColRef = FirebaseFirestore.getInstance().collection(place_id);
+        mColRef = FirebaseFirestore.getInstance().collection("review/place_id/" + place_id);
         Map<String,Object> dataToSave = new HashMap<String, Object>();
         dataToSave.put(USERNAME_KEY, "Beta User");
         dataToSave.put(USER_ID_KEY, "000000");
@@ -335,42 +383,83 @@ public class Business_Home extends AppCompatActivity {
         });
 
     }
+    public void saveHotelReview() { //set to boolean
+        mColRef = FirebaseFirestore.getInstance().collection("review/place_id/" + place_id);
+        Map<String,Object> dataToSave = new HashMap<String, Object>();
+        dataToSave.put(USERNAME_KEY, "Beta User");
+        dataToSave.put(USER_ID_KEY, "000000");
+        dataToSave.put(FF_C_KEY, ff_cleaning_text);
+        dataToSave.put(FF_S_KEY, ff_staff_text);
+        dataToSave.put(FF_L_KEY, ff_linens_text);
+        dataToSave.put(SMOKE_KEY, smoke_text);
+        dataToSave.put(FLOOR_KEY, floor_text);
+        dataToSave.put(TEXT_KEY, text_review_text);
+
+        mColRef.add(dataToSave).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                FetchNewReview();
+                Log.v(TAG, "no problems sending review");
+            }
+        });
+
+    }
     @Override
     protected void onStart(){
         super.onStart();
-        mColRef = FirebaseFirestore.getInstance().collection(place_id);
-        mColRef.get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            if (Types.contains("food") || Types.contains("restaurant")) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    dairy_AL.add(document.getData().get("dairy").toString());
-                                    eggs_AL.add(document.getData().get("eggs").toString());
-                                    fish_AL.add(document.getData().get("fish").toString());
-                                    shellfish_AL.add(document.getData().get("shellfish").toString());
-                                    peanuts_AL.add(document.getData().get("peanuts").toString());
-                                    tree_nuts_AL.add(document.getData().get("tree_nuts").toString());
-                                    wheat_AL.add(document.getData().get("wheat").toString());
-                                    soy_AL.add(document.getData().get("soy").toString());
-                                    ff_cleaning_AL.add(document.getData().get("fragrance_free_cleaning").toString());
-                                    ff_staff_AL.add(document.getData().get("fragrance_free_staff").toString());
-                                    sesame_AL.add(document.getData().get("sesame").toString());
-                                    rice_AL.add(document.getData().get("rice").toString());
-                                    sulphites_AL.add(document.getData().get("sulphites").toString());
-                                    es_AL.add(document.getData().get("electrical_sensitivity").toString());
-                                    AL_review_AL.add(document.getData().get("text_review").toString());
-                                    username_AL.add(document.getData().get("user_name").toString());
-                                    setFoodAdapter();
+        if(!already_loaded_reviews) {
+            already_loaded_reviews = true;
+            mColRef = FirebaseFirestore.getInstance().collection("review/place_id/" + place_id);
+            mColRef.get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if (Types.contains("food") || Types.contains("restaurant")) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        dairy_AL.add(document.getData().get("dairy").toString());
+                                        eggs_AL.add(document.getData().get("eggs").toString());
+                                        fish_AL.add(document.getData().get("fish").toString());
+                                        shellfish_AL.add(document.getData().get("shellfish").toString());
+                                        peanuts_AL.add(document.getData().get("peanuts").toString());
+                                        tree_nuts_AL.add(document.getData().get("tree_nuts").toString());
+                                        wheat_AL.add(document.getData().get("wheat").toString());
+                                        soy_AL.add(document.getData().get("soy").toString());
+                                        ff_cleaning_AL.add(document.getData().get("fragrance_free_cleaning").toString());
+                                        ff_staff_AL.add(document.getData().get("fragrance_free_staff").toString());
+                                        sesame_AL.add(document.getData().get("sesame").toString());
+                                        rice_AL.add(document.getData().get("rice").toString());
+                                        sulphites_AL.add(document.getData().get("sulphites").toString());
+                                        es_AL.add(document.getData().get("electrical_sensitivity").toString());
+                                        AL_review_AL.add(document.getData().get("text_review").toString());
+                                        username_AL.add(document.getData().get("user_name").toString());
+
 //                                    Log.v(TAG, document.getData().get("dairy").toString());
+                                    }
+                                    setFoodAdapter();
                                 }
+                                if (Types.contains("lodging")) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        ff_cleaning_AL.add(document.getData().get("fragrance_free_cleaning").toString());
+                                        ff_staff_AL.add(document.getData().get("fragrance_free_staff").toString());
+                                        ff_linens_AL.add(document.getData().get("fragrance_free_linens").toString());
+                                        smoke_AL.add(document.getData().get("smoke").toString());
+                                        floor_AL.add(document.getData().get("floor").toString());
+                                        AL_review_AL.add(document.getData().get("text_review").toString());
+                                        username_AL.add(document.getData().get("user_name").toString());
+
+//                                    Log.v(TAG, document.getData().get("dairy").toString());
+                                    }
+                                    Log.v(TAG, "Called setLodgingAdapter()");
+
+                                    setLodgingAdapter();
+                                }
+                            } else {
+                                Log.v(TAG, "Error getting documents: ", task.getException());
                             }
-                        } else {
-                            Log.v(TAG, "Error getting documents: ", task.getException());
                         }
-                    }
-                });
+                    });
+        }
     }
 
     private void setFoodAdapter() {
@@ -394,11 +483,30 @@ public class Business_Home extends AppCompatActivity {
                 username_AL);
         list=(ListView)findViewById(R.id.list_view);
         list.setAdapter(adapter);
-        getOverallReviewImage();
+        getOverallFoodReviewImage();
     }
-
-    private void getOverallReviewImage() {
-        int score = getTotalScore();
+    private void setLodgingAdapter() {
+        ListView list;
+        PlaceLodgingAdapter adapter=new PlaceLodgingAdapter(this,
+                ff_cleaning_AL,
+                ff_staff_AL,
+                ff_linens_AL,
+                smoke_AL,
+                floor_AL,
+                AL_review_AL,
+                username_AL);
+        list=(ListView)findViewById(R.id.list_view);
+        list.setAdapter(adapter);
+        getOverallLodgingReviewImage();
+    }
+    private void getOverallFoodReviewImage() {
+        int score = getTotalFoodScore();
+        ImageView reviewImage = (ImageView) findViewById(R.id.review_image);
+        Drawable img_value = setImageScore(score);
+        reviewImage.setImageDrawable(img_value);
+    }
+    private void getOverallLodgingReviewImage() {
+        int score = getTotalLodgingScore();
         ImageView reviewImage = (ImageView) findViewById(R.id.review_image);
         Drawable img_value = setImageScore(score);
         reviewImage.setImageDrawable(img_value);
@@ -448,7 +556,8 @@ public class Business_Home extends AppCompatActivity {
         }
 
     }
-    private int getTotalScore() {
+    private int getTotalFoodScore() {
+        tot_review_count=0;
         int dairy_rating = getScore(dairy_AL);
         int eggs_rating = getScore(eggs_AL);
         int fish_rating = getScore(fish_AL);
@@ -463,15 +572,31 @@ public class Business_Home extends AppCompatActivity {
         int rice_rating = getScore(rice_AL);
         int sulphites_rating = getScore(sulphites_AL);
         int es_rating = getScore(es_AL);
-
         int sum = dairy_rating + eggs_rating + fish_rating + shellfish_rating + peanuts_rating + tree_nuts_rating + wheat_rating
                 + soy_rating + ff_cleaning_rating + ff_staff_rating + seasame_rating + rice_rating + sulphites_rating + es_rating;
         if(tot_review_count>0) {
-            return(sum / tot_review_count);
+            Log.v("BUG",String.valueOf(sum));
+            Log.v("BUG",String.valueOf(tot_review_count));
+            return(sum / tot_review_count-1);
         }
         return 0;
     }
 
+    private int getTotalLodgingScore() {
+        tot_review_count=0;
+        int ff_cleaning_rating = getScore(ff_cleaning_AL);
+        int ff_staff_rating = getScore(ff_staff_AL);
+        int ff_linens_rating = getScore(ff_linens_AL);
+        int smoke_rating = getScore(smoke_AL);
+        int sum = ff_cleaning_rating + ff_staff_rating +ff_linens_rating + smoke_rating;
+
+        if(tot_review_count>0) {
+            Log.v("BUG",String.valueOf(sum));
+            Log.v("BUG",String.valueOf(tot_review_count));
+            return(sum / tot_review_count-1);
+        }
+        return 0;
+    }
     private int getScore(ArrayList<String> al) {
         int tot = 0;
         int review_count = 0;
@@ -502,13 +627,14 @@ public class Business_Home extends AppCompatActivity {
         }
         if(tot>0){
             tot_review_count+=1;
+            Log.v(TAG,al.toString());
             return tot/review_count;
         }
         return 0;
     }
 
     public void FetchNewReview(){
-        mColRef = FirebaseFirestore.getInstance().collection(place_id);
+        mColRef = FirebaseFirestore.getInstance().collection("review/place_id/" + place_id);
         mColRef.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -532,6 +658,17 @@ public class Business_Home extends AppCompatActivity {
                                 AL_review_AL.add(text_review_text);
                                 username_AL.add("Beta User");
                                 setFoodAdapter();
+
+                            }
+                            else if (Types.contains("lodging")){
+                                ff_cleaning_AL.add(ff_cleaning_text);
+                                ff_staff_AL.add(ff_staff_text);
+                                ff_linens_AL.add(ff_linens_text);
+                                smoke_AL.add(smoke_text);
+                                floor_AL.add(floor_text);
+                                AL_review_AL.add(text_review_text);
+                                username_AL.add("Beta User");
+                                setLodgingAdapter();
 
                             }
                         } else {
@@ -579,6 +716,9 @@ public class Business_Home extends AppCompatActivity {
         if (photoMetadatas != null && !photoMetadatas.isEmpty()) {
             fetchPhoto(photoMetadatas.get(0));
         }
+        else{
+            photoView.setImageResource(R.drawable.image_off);
+        }
     }
 
     /**
@@ -600,6 +740,7 @@ public class Business_Home extends AppCompatActivity {
 
         photoTask.addOnFailureListener(
                 exception -> {
+                    Log.v(TAG,"No Image");
                     exception.printStackTrace();
                 });
 

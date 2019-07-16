@@ -110,25 +110,25 @@
                         android:drawableTop="@drawable/hotel"
                         />
                     <Button
-                        android:id="@+id/button_amusement_nearby"
+                        android:id="@+id/button_car_rental_nearby"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Amusement"
+                        android:text="Car Rental"
                         android:textSize="9dp"
                         android:backgroundTint="@color/quantum_white_text"
-                        android:drawableTop="@drawable/ferris_wheel"
+                        android:drawableTop="@drawable/car"
                         />
-                    <Button
-                        android:id="@+id/button_favorites"
-                        android:layout_width="wrap_content"
-                        android:layout_height="60dp"
-                        android:layout_weight="1"
-                        android:text="Favorite"
-                        android:textSize="9dp"
-                        android:backgroundTint="@color/quantum_white_text"
-                        android:drawableTop="@drawable/star"
-                        />
+                    <!--<Button-->
+                        <!--android:id="@+id/button_favorites"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="60dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:text="Favorite"-->
+                        <!--android:textSize="9dp"-->
+                        <!--android:backgroundTint="@color/quantum_white_text"-->
+                        <!--android:drawableTop="@drawable/star"-->
+                        <!--/>-->
                 </LinearLayout>
 
 

@@ -3,6 +3,7 @@ package edu.wit.mobileapp.allergyreportcard;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -32,6 +33,7 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -41,9 +43,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.LocationBias;
 import com.google.android.libraries.places.api.model.LocationRestriction;
+import com.google.android.libraries.places.api.model.PhotoMetadata;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.FetchPhotoRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -64,6 +69,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.content.Context;
@@ -144,15 +150,21 @@ public class MainActivity extends AppCompatActivity
         hotel_button.setOnClickListener(v -> {
             loadNearByPlaces("lodging");
         });
-        Button amusement_button = (Button) findViewById(R.id.button_amusement_nearby);
+        Button amusement_button = (Button) findViewById(R.id.button_car_rental_nearby);
         amusement_button.setOnClickListener(v -> {
-            loadNearByPlaces("museum");
+            loadNearByPlaces("car_rental");
         });
-        Button favorites_button = (Button) findViewById(R.id.button_favorites);
-        favorites_button.setOnClickListener(v -> {
-//            lat_long.setText("No Favorites");
-        });
+//        Button favorites_button = (Button) findViewById(R.id.button_favorites);
+//        favorites_button.setOnClickListener(v -> {
+////            lat_long.setText("No Favorites");
+//        });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        requestPermission();
     }
 
     private void setupAutocompleteSupportFragment() {
@@ -435,14 +447,19 @@ public class MainActivity extends AppCompatActivity
                         loadNearByPlaces("restaurant");
 //                        getNearByLocations(Longitude, Latitude);
                     }
+//                    else {
+//                        Latitude = "42.3376835";
+//                        Longitude = "-71.0963538";
+//                        loadNearByPlaces("restaurant");
+//                    }
                 }
             });
         }
     }
 
     private void getNearByLocations(String longitude, String latitude) {
-        Log.v(TAG,"Longitude:" + Longitude);
-        Log.v(TAG,"Latitude:" + Latitude);
+//        Log.v(TAG,"Longitude:" + Longitude);
+//        Log.v(TAG,"Latitude:" + Latitude);
     }
 
     private void loadNearByPlaces(String type)
@@ -451,7 +468,7 @@ public class MainActivity extends AppCompatActivity
         RequestQueue requestQueue;
 
 // Instantiate the cache
-        Cache cache = new DiskBasedCache(getCacheDir(), (1024 * 1024)); // 1MB cap
+        Cache cache = new DiskBasedCache(getCacheDir(), (1024)); // 1MB cap
 
 // Set up the network to use HttpURLConnection as the HTTP client.
         Network network = new BasicNetwork(new HurlStack());
@@ -523,7 +540,10 @@ public class MainActivity extends AppCompatActivity
 
     private void setNearbyLocationView() {
         ListView list;
-        NearbyListAdapter adapter=new NearbyListAdapter(this, name_list,vicinity_list);
+        ArrayList<String> temp_id_list = limitSize(id_list);
+        ArrayList<String> temp_name_list = limitSize(name_list);
+        ArrayList<String> temp_vicinity_list = limitSize(vicinity_list);
+        NearbyListAdapter adapter=new NearbyListAdapter(this, temp_id_list,temp_name_list,temp_vicinity_list);
         list=(ListView)findViewById(R.id.list_view);
         list.setAdapter(adapter);
 
@@ -536,4 +556,13 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
+
+    private ArrayList<String> limitSize(ArrayList<String> AL) {
+        ArrayList<String> temp = new ArrayList<>();
+        for(int i =0; i<6;i++){
+            temp.add(AL.get(i));
+        }
+        return temp;
+    }
+
 }
