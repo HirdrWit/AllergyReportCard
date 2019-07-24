@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#d3e7d8"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:backgroundTint="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/review_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Restaurant Review"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="75dp"
+                android:textSize="20dp"
+                android:textColor="@color/quantum_white_text"/>
+
+            <Button
+                android:id="@+id/review_prompt_close"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="x" />
+        </LinearLayout>
+
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="315dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:outlineSpotShadowColor="@color/colorQRank">
+
+                <TextView
+                    android:id="@+id/review_instruct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="Please score this locations ability to accommodate each category,"
+                    android:textSize="10sp"/>
+
+
+                <TextView
+                    android:id="@+id/fragrance_free_interior"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fragrance Free Interior : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/fragrance_free_interior_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/fragrance_free_interior_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/fragrance_free_interior_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/fragrance_free_interior_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/fragrance_free_interior_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/fragrance_free_interior_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/fragrance_free_interior_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/smoke_free_interior_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Smoke Free : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/smoke_free_interior_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/smoke_free_interior_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/help_circle_outline"
+                        android:checked="true"
+                        android:text="Q"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/smoke_free_interior_F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_f_circle_outline"
+                        android:text="F"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/smoke_free_interior_D"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_d_circle_outline"
+                        android:text="D"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/smoke_free_interior_C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_c_circle_outline"
+                        android:text="C"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/smoke_free_interior_B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_b_circle_outline"
+                        android:text="B"
+                        android:textSize="0dp" />
+
+                    <RadioButton
+                        android:id="@+id/smoke_free_interior_A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/alpha_a_circle_outline"
+                        android:text="A"
+                        android:textSize="0dp" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/seat_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Interior options : "
+                    android:textSize="15sp"/>
+
+                <RadioGroup
+                    android:id="@+id/seat_RadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/seat_both"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:checked="true"
+                        android:text="Both"
+                        android:textSize="10dp" />
+                    <RadioButton
+                        android:id="@+id/seat_carpet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:text="Carpet"
+                        android:textSize="10dp" />
+
+                    <RadioButton
+                        android:id="@+id/seat_leather"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="Leather"
+                        android:textSize="10dp" />
+
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/text_review_Label"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Write About Your Experience! : "
+                    android:textSize="15sp"/>
+                <EditText
+                    android:id="@+id/text_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_gravity="top"
+                    android:textSize="15sp"
+                    android:textColor="@color/quantum_black_100"
+                    android:inputType="textMultiLine"
+                    />
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/review_prompt_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:paddingRight="0dp"
+            android:text="Save Review!" />
+
+    </LinearLayout>
+
+</RelativeLayout>

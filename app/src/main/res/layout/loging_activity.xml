@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <LinearLayout
+    tools:context=".LoginActivity"
+    android:padding="5dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#e3e8e4"
+    >
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:text="Allergy Report Card"
+        android:textColor="@color/colorPrimaryDark"
+        android:paddingBottom="65dp"
+        />
+
+    <EditText
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:background="#dae3db"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/email"/>
+
+    <EditText
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:inputType="textPassword"
+        android:hint="Password"
+        android:id="@+id/password"
+        android:background="#dae3db"
+        android:textColor="@color/colorPrimaryDark"
+        />
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Log In"
+        android:layout_marginTop="15dp"
+        android:id="@+id/btn_login"
+        android:background="@color/colorPrimary"
+        />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Or Sign Up"
+        android:layout_marginTop="10dp"
+        android:id="@+id/link_register"
+        android:textColor="@color/colorPrimaryDark"/>
+
+</LinearLayout>

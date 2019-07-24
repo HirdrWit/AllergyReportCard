@@ -96,8 +96,14 @@ public class Business_Home extends AppCompatActivity {
     private String rice_text;
     private String sulphites_text;
     private String es_text;
+    private String fragrance_free_interior_text;
+    private String smoke_free_interior_text;
+    private String car_interior_text;
+
     private String text_review_text;
+
     private Boolean already_loaded_reviews = false;
+
     private ArrayList<String> dairy_AL= new ArrayList<>();
     private ArrayList<String> eggs_AL= new ArrayList<>();
     private ArrayList<String> fish_AL= new ArrayList<>();
@@ -117,6 +123,10 @@ public class Business_Home extends AppCompatActivity {
     private ArrayList<String> AL_review_AL= new ArrayList<>();
     private ArrayList<String> username_AL= new ArrayList<>();
     private ArrayList<String> floor_AL= new ArrayList<>();
+    private ArrayList<String> ff_interior_AL= new ArrayList<>();
+    private ArrayList<String> sf_interior_AL= new ArrayList<>();
+    private ArrayList<String> car_interior_AL= new ArrayList<>();
+    private ArrayList<String> Username_AL= new ArrayList<>();
 
     public static final String DAIRY_KEY = "dairy";
     public static final String EGGS_KEY = "eggs";
@@ -137,6 +147,9 @@ public class Business_Home extends AppCompatActivity {
     public static final String FLOOR_KEY = "floor";
     public static final String TEXT_KEY = "text_review";
     public static final String USERNAME_KEY = "user_name";
+    public static final String FF_INTERIOR_KEY = "fragrance_interior";
+    public static final String SF_INTERIOR_KEY = "smoke_interior";
+    public static final String CAR_INTERIOR_KEY = "car_interior";
     public static final String USER_ID_KEY = "user_id";
     private int tot_review_count = 0;
 
@@ -193,11 +206,12 @@ public class Business_Home extends AppCompatActivity {
             Log.v(TAG,"Lodging Review Prompt");
         }
         else if(Types.contains("car_rental")){
-            popupView = inflater.inflate(R.layout.food_review_prompt, null);
+            popupView = inflater.inflate(R.layout.car_review_prompt, null);
             Log.v(TAG,"Car Review Prompt");
         }
         else{
             popupView = inflater.inflate(R.layout.food_review_prompt, null);
+            Log.v(TAG,"OTHER (food) Review Prompt");
         }
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -344,10 +358,117 @@ public class Business_Home extends AppCompatActivity {
                 }
                 else if(Types.contains("car_rental")){
 
-                    Log.v(TAG,"Not Working");
+                    RadioGroup ff_interior_radioGroup = (RadioGroup) popupView.findViewById(R.id.fragrance_free_interior_RadioGroup);
+                    RadioGroup sf_interior_radioGroup = (RadioGroup) popupView.findViewById(R.id.smoke_free_interior_RadioGroup);
+                    RadioGroup car_interior_radioGroup = (RadioGroup) popupView.findViewById(R.id.seat_RadioGroup);
+                    EditText text_review = (EditText) popupView.findViewById(R.id.text_review);
+
+                    int ff_interior_SelectedId = ff_interior_radioGroup.getCheckedRadioButtonId();
+                    int sf_interior_SelectedId = sf_interior_radioGroup.getCheckedRadioButtonId();
+                    int car_interior_SelectedId = car_interior_radioGroup.getCheckedRadioButtonId();
+
+
+                    RadioButton ff_interior_radioButton = (RadioButton) popupView.findViewById(ff_interior_SelectedId);
+                    RadioButton sf_interior_radioButton = (RadioButton) popupView.findViewById(sf_interior_SelectedId);
+                    RadioButton car_interior_radioButton = (RadioButton) popupView.findViewById(car_interior_SelectedId);
+
+                    fragrance_free_interior_text = ff_interior_radioButton.getText().toString();
+                    smoke_free_interior_text = sf_interior_radioButton.getText().toString();
+                    car_interior_text = car_interior_radioButton.getText().toString();
+
+                    text_review_text = text_review.getText().toString();
+                    if( TextUtils.isEmpty(text_review.getText())){
+                        text_review.setError( "Please write a review." );
+
+                        Context context = getApplicationContext();
+                        CharSequence text = "Please write a review.";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                    else{
+                        saveCarReview();
+                        popupWindow.dismiss();
+                    }
                 }
                 else{
-                    Log.v(TAG,"Not Working");
+                    RadioGroup dairy_radioGroup = (RadioGroup) popupView.findViewById(R.id.dairy_RadioGroup);
+                    RadioGroup eggs_radioGroup = (RadioGroup) popupView.findViewById(R.id.eggs_RadioGroup);
+                    RadioGroup fish_radioGroup = (RadioGroup) popupView.findViewById(R.id.fish_RadioGroup);
+                    RadioGroup shellfish_radioGroup = (RadioGroup) popupView.findViewById(R.id.shellfish_RadioGroup);
+                    RadioGroup peanuts_radioGroup = (RadioGroup) popupView.findViewById(R.id.peanuts_RadioGroup);
+                    RadioGroup tree_nuts_radioGroup = (RadioGroup) popupView.findViewById(R.id.tree_nuts_RadioGroup);
+                    RadioGroup wheat_radioGroup = (RadioGroup) popupView.findViewById(R.id.wheat_RadioGroup);
+                    RadioGroup soy_radioGroup = (RadioGroup) popupView.findViewById(R.id.soy_RadioGroup);
+                    RadioGroup ff_cleaning_products_radioGroup = (RadioGroup) popupView.findViewById(R.id.ff_cleaning_products_RadioGroup);
+                    RadioGroup ff_staff_radioGroup = (RadioGroup) popupView.findViewById(R.id.ff_staff_RadioGroup);
+                    RadioGroup sesame_radioGroup = (RadioGroup) popupView.findViewById(R.id.sesame_RadioGroup);
+                    RadioGroup rice_radioGroup = (RadioGroup) popupView.findViewById(R.id.rice_RadioGroup);
+                    RadioGroup sulphites_radioGroup = (RadioGroup) popupView.findViewById(R.id.sulphites_RadioGroup);
+                    RadioGroup es_radioGroup = (RadioGroup) popupView.findViewById(R.id.es_RadioGroup);
+                    EditText text_review = (EditText) popupView.findViewById(R.id.text_review);
+
+                    int dairySelectedId = dairy_radioGroup.getCheckedRadioButtonId();
+                    int eggsSelectedId = eggs_radioGroup.getCheckedRadioButtonId();
+                    int fishSelectedId = fish_radioGroup.getCheckedRadioButtonId();
+                    int shellfishSelectedId = shellfish_radioGroup.getCheckedRadioButtonId();
+                    int peanutsSelectedId = peanuts_radioGroup.getCheckedRadioButtonId();
+                    int tree_nuts_SelectedId = tree_nuts_radioGroup.getCheckedRadioButtonId();
+                    int wheatSelectedId = wheat_radioGroup.getCheckedRadioButtonId();
+                    int soySelectedId = soy_radioGroup.getCheckedRadioButtonId();
+                    int ff_cleaning_SelectedId = ff_cleaning_products_radioGroup.getCheckedRadioButtonId();
+                    int ff_staff_SelectedId = ff_staff_radioGroup.getCheckedRadioButtonId();
+                    int sesameSelectedId = sesame_radioGroup.getCheckedRadioButtonId();
+                    int riceSelectedId = rice_radioGroup.getCheckedRadioButtonId();
+                    int sulphitesSelectedId = sulphites_radioGroup.getCheckedRadioButtonId();
+                    int esSelectedId = es_radioGroup.getCheckedRadioButtonId();
+
+
+                    RadioButton dairy_radioButton = (RadioButton) popupView.findViewById(dairySelectedId);
+                    RadioButton eggs_radioButton = (RadioButton) popupView.findViewById(eggsSelectedId);
+                    RadioButton fish_radioButton = (RadioButton) popupView.findViewById(fishSelectedId);
+                    RadioButton shellfish_radioButton = (RadioButton) popupView.findViewById(shellfishSelectedId);
+                    RadioButton peanuts_radioButton = (RadioButton) popupView.findViewById(peanutsSelectedId);
+                    RadioButton tree_nuts_radioButton = (RadioButton) popupView.findViewById(tree_nuts_SelectedId);
+                    RadioButton wheat_radioButton = (RadioButton) popupView.findViewById(wheatSelectedId);
+                    RadioButton soy_radioButton = (RadioButton) popupView.findViewById(soySelectedId);
+                    RadioButton ff_cleaning_radioButton = (RadioButton) popupView.findViewById(ff_cleaning_SelectedId);
+                    RadioButton ff_staff_radioButton = (RadioButton) popupView.findViewById(ff_staff_SelectedId);
+                    RadioButton sesame_radioButton = (RadioButton) popupView.findViewById(sesameSelectedId);
+                    RadioButton rice_radioButton = (RadioButton) popupView.findViewById(riceSelectedId);
+                    RadioButton sulphites_radioButton = (RadioButton) popupView.findViewById(sulphitesSelectedId);
+                    RadioButton es_radioButton = (RadioButton) popupView.findViewById(esSelectedId);
+
+                    dairy_text = dairy_radioButton.getText().toString();
+                    eggs_text = eggs_radioButton.getText().toString();
+                    fish_text = fish_radioButton.getText().toString();
+                    shellfish_text = shellfish_radioButton.getText().toString();
+                    peanuts_text = peanuts_radioButton.getText().toString();
+                    tree_nuts_text = tree_nuts_radioButton.getText().toString();
+                    wheat_text = wheat_radioButton.getText().toString();
+                    soy_text = soy_radioButton.getText().toString();
+                    ff_cleaning_text = ff_cleaning_radioButton.getText().toString();
+                    ff_staff_text = ff_staff_radioButton.getText().toString();
+                    sesame_text = sesame_radioButton.getText().toString();
+                    rice_text = rice_radioButton.getText().toString();
+                    sulphites_text = sulphites_radioButton.getText().toString();
+                    es_text = es_radioButton.getText().toString();
+                    text_review_text = text_review.getText().toString();
+                    if( TextUtils.isEmpty(text_review.getText())){
+                        text_review.setError( "Please write a review." );
+
+                        Context context = getApplicationContext();
+                        CharSequence text = "Please write a review.";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                    else{
+                        saveFoodReview();
+                        popupWindow.dismiss();
+                    }
                 }
             }
             });
@@ -356,7 +477,7 @@ public class Business_Home extends AppCompatActivity {
     public void saveFoodReview() { //set to boolean
         mColRef = FirebaseFirestore.getInstance().collection("review/place_id/" + place_id);
         Map<String,Object> dataToSave = new HashMap<String, Object>();
-        dataToSave.put(USERNAME_KEY, "Beta User");
+        dataToSave.put(USERNAME_KEY, MainActivity.username_text);
         dataToSave.put(USER_ID_KEY, "000000");
         dataToSave.put(DAIRY_KEY, dairy_text);
         dataToSave.put(EGGS_KEY, eggs_text);
@@ -378,15 +499,18 @@ public class Business_Home extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 FetchNewReview();
+                Toast.makeText(getApplicationContext(), "Saved Review", Toast.LENGTH_LONG).show();
                 Log.v(TAG, "no problems sending review");
             }
+
         });
+
 
     }
     public void saveHotelReview() { //set to boolean
         mColRef = FirebaseFirestore.getInstance().collection("review/place_id/" + place_id);
         Map<String,Object> dataToSave = new HashMap<String, Object>();
-        dataToSave.put(USERNAME_KEY, "Beta User");
+        dataToSave.put(USERNAME_KEY, MainActivity.username_text);
         dataToSave.put(USER_ID_KEY, "000000");
         dataToSave.put(FF_C_KEY, ff_cleaning_text);
         dataToSave.put(FF_S_KEY, ff_staff_text);
@@ -399,6 +523,27 @@ public class Business_Home extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 FetchNewReview();
+                Toast.makeText(getApplicationContext(), "Saved Review", Toast.LENGTH_LONG).show();
+                Log.v(TAG, "no problems sending review");
+            }
+        });
+
+    }
+    public void saveCarReview() { //set to boolean
+        mColRef = FirebaseFirestore.getInstance().collection("review/place_id/" + place_id);
+        Map<String,Object> dataToSave = new HashMap<String, Object>();
+        dataToSave.put(USERNAME_KEY, MainActivity.username_text);
+        dataToSave.put(USER_ID_KEY, "000000");
+        dataToSave.put(FF_INTERIOR_KEY, fragrance_free_interior_text);
+        dataToSave.put(SF_INTERIOR_KEY, smoke_free_interior_text);
+        dataToSave.put(CAR_INTERIOR_KEY, car_interior_text);
+        dataToSave.put(TEXT_KEY, text_review_text);
+
+        mColRef.add(dataToSave).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                FetchNewReview();
+                Toast.makeText(getApplicationContext(), "Saved Review", Toast.LENGTH_LONG).show();
                 Log.v(TAG, "no problems sending review");
             }
         });
@@ -454,6 +599,47 @@ public class Business_Home extends AppCompatActivity {
 
                                     setLodgingAdapter();
                                 }
+
+                                if (Types.contains("car_rental")) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        ff_interior_AL.add(document.getData().get("fragrance_interior").toString());
+                                        sf_interior_AL.add(document.getData().get("smoke_interior").toString());
+                                        car_interior_AL.add(document.getData().get("car_interior").toString());
+                                        AL_review_AL.add(document.getData().get("text_review").toString());
+                                        username_AL.add(document.getData().get("user_name").toString());
+
+//                                    Log.v(TAG, document.getData().get("dairy").toString());
+                                    }
+                                    Log.v(TAG, "Called setCarRentalAdapter()");
+
+                                    setCarAdapter();
+                                }
+                                else if (!Types.contains("food") && !Types.contains("restaurant") && !Types.contains("lodging") && !Types.contains("car_rental")){
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        dairy_AL.add(document.getData().get("dairy").toString());
+                                        eggs_AL.add(document.getData().get("eggs").toString());
+                                        fish_AL.add(document.getData().get("fish").toString());
+                                        shellfish_AL.add(document.getData().get("shellfish").toString());
+                                        peanuts_AL.add(document.getData().get("peanuts").toString());
+                                        tree_nuts_AL.add(document.getData().get("tree_nuts").toString());
+                                        wheat_AL.add(document.getData().get("wheat").toString());
+                                        soy_AL.add(document.getData().get("soy").toString());
+                                        ff_cleaning_AL.add(document.getData().get("fragrance_free_cleaning").toString());
+                                        ff_staff_AL.add(document.getData().get("fragrance_free_staff").toString());
+                                        sesame_AL.add(document.getData().get("sesame").toString());
+                                        rice_AL.add(document.getData().get("rice").toString());
+                                        sulphites_AL.add(document.getData().get("sulphites").toString());
+                                        es_AL.add(document.getData().get("electrical_sensitivity").toString());
+                                        AL_review_AL.add(document.getData().get("text_review").toString());
+                                        username_AL.add(document.getData().get("user_name").toString());
+
+//                                    Log.v(TAG, document.getData().get("dairy").toString());
+                                    }Log.v(TAG, "Called DEFAULT setFoodAdapter()");
+
+                                    setFoodAdapter();
+
+                                }
+
                             } else {
                                 Log.v(TAG, "Error getting documents: ", task.getException());
                             }
@@ -499,6 +685,18 @@ public class Business_Home extends AppCompatActivity {
         list.setAdapter(adapter);
         getOverallLodgingReviewImage();
     }
+    private void setCarAdapter() {
+        ListView list;
+        PlaceCarRentalAdapter adapter=new PlaceCarRentalAdapter(this,
+                ff_interior_AL,
+                sf_interior_AL,
+                car_interior_AL,
+                AL_review_AL,
+                username_AL);
+        list=(ListView)findViewById(R.id.list_view);
+        list.setAdapter(adapter);
+        getOverallCarRentalReviewImage();
+    }
     private void getOverallFoodReviewImage() {
         int score = getTotalFoodScore();
         ImageView reviewImage = (ImageView) findViewById(R.id.review_image);
@@ -507,6 +705,12 @@ public class Business_Home extends AppCompatActivity {
     }
     private void getOverallLodgingReviewImage() {
         int score = getTotalLodgingScore();
+        ImageView reviewImage = (ImageView) findViewById(R.id.review_image);
+        Drawable img_value = setImageScore(score);
+        reviewImage.setImageDrawable(img_value);
+    }
+    private void getOverallCarRentalReviewImage() {
+        int score = getTotalCarRentalScore();
         ImageView reviewImage = (ImageView) findViewById(R.id.review_image);
         Drawable img_value = setImageScore(score);
         reviewImage.setImageDrawable(img_value);
@@ -597,6 +801,20 @@ public class Business_Home extends AppCompatActivity {
         }
         return 0;
     }
+    private int getTotalCarRentalScore() {
+        tot_review_count=0;
+        int ff_interior_rating = getScore(ff_interior_AL);
+        int sf_interior_rating = getScore(sf_interior_AL);
+
+        int sum = ff_interior_rating + sf_interior_rating;
+
+        if(tot_review_count>0) {
+            Log.v("BUG",String.valueOf(sum));
+            Log.v("BUG",String.valueOf(tot_review_count));
+            return(sum / tot_review_count-1);
+        }
+        return 0;
+    }
     private int getScore(ArrayList<String> al) {
         int tot = 0;
         int review_count = 0;
@@ -656,7 +874,7 @@ public class Business_Home extends AppCompatActivity {
                                 sulphites_AL.add(sulphites_text);
                                 es_AL.add(es_text);
                                 AL_review_AL.add(text_review_text);
-                                username_AL.add("Beta User");
+                                username_AL.add(MainActivity.username_text);
                                 setFoodAdapter();
 
                             }
@@ -667,12 +885,39 @@ public class Business_Home extends AppCompatActivity {
                                 smoke_AL.add(smoke_text);
                                 floor_AL.add(floor_text);
                                 AL_review_AL.add(text_review_text);
-                                username_AL.add("Beta User");
+                                username_AL.add(MainActivity.username_text);
                                 setLodgingAdapter();
 
                             }
-                        } else {
-                            Log.v(TAG, "Error getting documents: ", task.getException());
+                            else if (Types.contains("car_rental")){
+                                ff_interior_AL.add(fragrance_free_interior_text);
+                                sf_interior_AL.add(smoke_free_interior_text);
+                                car_interior_AL.add(car_interior_text);
+                                AL_review_AL.add(text_review_text);
+                                username_AL.add(MainActivity.username_text);
+                                setCarAdapter();
+
+                            }
+                            else if (!Types.contains("food") && !Types.contains("restaurant") && !Types.contains("lodging") && !Types.contains("car_rental")) {
+
+                                dairy_AL.add(dairy_text);
+                                eggs_AL.add(eggs_text);
+                                fish_AL.add(fish_text);
+                                shellfish_AL.add(shellfish_text);
+                                peanuts_AL.add(peanuts_text);
+                                tree_nuts_AL.add(tree_nuts_text);
+                                wheat_AL.add(wheat_text);
+                                soy_AL.add(soy_text);
+                                ff_cleaning_AL.add(ff_cleaning_text);
+                                ff_staff_AL.add(ff_staff_text);
+                                sesame_AL.add(sesame_text);
+                                rice_AL.add(rice_text);
+                                sulphites_AL.add(sulphites_text);
+                                es_AL.add(es_text);
+                                AL_review_AL.add(text_review_text);
+                                username_AL.add(MainActivity.username_text);
+                                setFoodAdapter();
+                            }
                         }
                     }
                 });

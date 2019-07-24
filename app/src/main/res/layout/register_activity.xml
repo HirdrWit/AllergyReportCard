@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <LinearLayout
+    tools:context=".RegisterActivity"
+    android:padding="10dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#e3e8e4">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Allergy Report Card"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="25dp"
+        android:paddingBottom="40dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:hint="Full Name"
+        android:id="@+id/fullName"
+        android:background="#dae3db"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <EditText
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:hint="Email"
+        android:id="@+id/email"
+        android:inputType="textEmailAddress"
+        android:background="#dae3db"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <EditText
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:hint="Password"
+        android:id="@+id/password"
+        android:inputType="textPassword"
+        android:background="#dae3db"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <EditText
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:hint="Confirm Password"
+        android:id="@+id/password2"
+        android:inputType="textPassword"
+        android:background="#dae3db"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Sign up"
+        android:layout_marginTop="15dp"
+        android:id="@+id/btn_register"
+
+        android:background="@color/colorPrimary"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Already have an account? Log in here!"
+        android:layout_marginTop="10dp"
+        android:id="@+id/link_login"
+        android:textColor="@color/colorPrimaryDark"/>
+
+</LinearLayout>

@@ -25,7 +25,7 @@
                 android:layout_height="30dp"
                 android:layout_weight="1"
 
-                app:srcCompat="@mipmap/ic_launcher_round" />
+                app:srcCompat="@drawable/human_greeting" />
 
             <TextView
                 android:id="@+id/username"
